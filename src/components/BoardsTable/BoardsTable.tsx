@@ -22,11 +22,17 @@ export default function ResponsiveTable() {
         {/* --- Table Head -------------------------------------------------- */}
         <thead className="bg-gray-50 text-left">
           <tr>
-            <th className="px-4 py-3 font-semibold tracking-wide">Header 1</th>
-            <th className="px-4 py-3 font-semibold tracking-wide">Header 2</th>
-            <th className="px-4 py-3 font-semibold tracking-wide">Header 3</th>
-            <th className="px-4 py-3 font-semibold tracking-wide">Header 4</th>
-            <th className="px-4 py-3 font-semibold tracking-wide">Header 5</th>
+            <th className="px-4 py-3 font-semibold tracking-wide">
+              Board Name
+            </th>
+            <th className="px-4 py-3 font-semibold tracking-wide">
+              Created by
+            </th>
+            <th className="px-4 py-3 font-semibold tracking-wide">
+              Created on
+            </th>
+            <th className="px-4 py-3 font-semibold tracking-wide">Columns</th>
+            <th className="px-4 py-3 font-semibold tracking-wide">Actions</th>
           </tr>
         </thead>
 
