@@ -1,0 +1,27 @@
+import React from "react";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router";
+import { BoardsPage } from "../pages/BoardsPage";
+import { BoardDetailsPage } from "../pages/BoardDetailsPage";
+import { Layout } from "../components/Layout";
+
+export const AppRouter: React.FC = () => {
+  return (
+    <Router>
+      <Layout>
+        <Routes>
+          {/* Default route redirects to boards */}
+          <Route path="/" element={<Navigate to="/boards" replace />} />
+
+          {/* Boards listing page */}
+          <Route path="/boards" element={<BoardsPage />} />
+
+          {/* Individual board detail page */}
+          <Route path="/boards/:boardId" element={<BoardDetailsPage />} />
+
+          {/* Catch-all route for 404 */}
+          <Route path="*" element={<div>Page Not Found</div>} />
+        </Routes>
+      </Layout>
+    </Router>
+  );
+};
