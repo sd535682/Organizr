@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router";
 import { BoardsPage } from "../pages/BoardsPage";
 import { BoardDetailsPage } from "../pages/BoardDetailsPage";
-import StickyHeader from "../components/StickyHeader";
+import StickyHeader from "../components/Header/StickyHeader";
 
 export const AppRouter: React.FC = () => {
   return (
