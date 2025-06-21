@@ -1,21 +1,30 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import type { Board, Column, Task, User } from "../types/index";
+import type { Board, Column, Task, User } from "../types";
 
+// Interface for the store state
 interface StoreState {
   boards: Record<string, Board>;
   columns: Record<string, Column>;
   tasks: Record<string, Task>;
   users: Record<string, User>;
+  currentUserId: string;
 
+  // User actions for user management
+  addUser: (name: string) => string;
+  setCurrentUser: (userId: string) => void;
+
+  // Board actions for board management
   createBoard: (name: string, createdBy: string) => string;
   deleteBoard: (boardId: string) => void;
 
+  // Column actions for column management
   createColumn: (boardId: string, title: string) => string;
   updateColumn: (columnId: string, title: string) => void;
   deleteColumn: (columnId: string) => void;
 
+  // Task actions for task management
   createTask: (columnId: string, task: Omit<Task, "id" | "columnId">) => string;
   updateTask: (taskId: string, updates: Partial<Task>) => void;
   deleteTask: (taskId: string) => void;
@@ -27,38 +36,46 @@ interface StoreState {
   reorderTasks: (columnId: string, taskIds: string[]) => void;
 }
 
+// Function to generate a random ID
 const generateId = () => Math.random().toString(36).substr(2, 9);
 
+// Function to generate a random avatar
+const generateAvatar = (name: string) => {
+  // Array of avatar URLs from Pexels
+  const avatars = [
+    "https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&dpr=1",
+    "https://images.pexels.com/photos/1222271/pexels-photo-1222271.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&dpr=1",
+    "https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&dpr=1",
+    "https://images.pexels.com/photos/1681010/pexels-photo-1681010.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&dpr=1",
+    "https://images.pexels.com/photos/1130626/pexels-photo-1130626.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&dpr=1",
+    "https://images.pexels.com/photos/1043471/pexels-photo-1043471.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&dpr=1",
+    "https://images.pexels.com/photos/1040880/pexels-photo-1040880.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&dpr=1",
+    "https://images.pexels.com/photos/1212984/pexels-photo-1212984.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&dpr=1",
+  ];
+
+  // Generate a hash based on the name
+  const hash = name.split("").reduce((a, b) => {
+    a = (a << 5) - a + b.charCodeAt(0);
+    return a & a;
+  }, 0);
+
+  // Return a random avatar URL
+  return avatars[Math.abs(hash) % avatars.length];
+};
+
+// Initial users
 const initialUsers: Record<string, User> = {
   user1: {
     id: "user1",
-    name: "Sarah Miller",
-    avatar:
-      "https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&dpr=1",
-  },
-  user2: {
-    id: "user2",
-    name: "David Lee",
+    name: "Subhadeep Das",
     avatar:
       "https://images.pexels.com/photos/1222271/pexels-photo-1222271.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&dpr=1",
   },
-  user3: {
-    id: "user3",
-    name: "Emily Chen",
+  user2: {
+    id: "user2",
+    name: "Susmita Sarkar",
     avatar:
       "https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&dpr=1",
-  },
-  user4: {
-    id: "user4",
-    name: "Michael Brown",
-    avatar:
-      "https://images.pexels.com/photos/1681010/pexels-photo-1681010.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&dpr=1",
-  },
-  user5: {
-    id: "user5",
-    name: "Jessica Wilson",
-    avatar:
-      "https://images.pexels.com/photos/1130626/pexels-photo-1130626.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&dpr=1",
   },
 };
 
@@ -66,43 +83,17 @@ export const useStore = create<StoreState>()(
   persist(
     (set, get) => ({
       boards: {
+        // Initial board
         board1: {
           id: "board1",
           name: "Marketing Campaign",
-          createdBy: "Sarah Miller",
+          createdBy: "Subhadeep Das",
           createdDate: "2023-08-15",
-          columnCount: 4,
-        },
-        board2: {
-          id: "board2",
-          name: "Product Launch",
-          createdBy: "David Lee",
-          createdDate: "2023-07-22",
-          columnCount: 5,
-        },
-        board3: {
-          id: "board3",
-          name: "Event Planning",
-          createdBy: "Emily Chen",
-          createdDate: "2023-06-10",
           columnCount: 3,
-        },
-        board4: {
-          id: "board4",
-          name: "Customer Feedback",
-          createdBy: "Michael Brown",
-          createdDate: "2023-05-05",
-          columnCount: 6,
-        },
-        board5: {
-          id: "board5",
-          name: "Team Onboarding",
-          createdBy: "Jessica Wilson",
-          createdDate: "2023-04-18",
-          columnCount: 2,
         },
       },
       columns: {
+        // Initial columns
         col1: {
           id: "col1",
           title: "To Do",
@@ -126,14 +117,15 @@ export const useStore = create<StoreState>()(
         },
       },
       tasks: {
+        // Initial tasks
         task1: {
           id: "task1",
           title: "Design the landing page",
           description:
             "Create a visually appealing and user-friendly landing page for the new product.",
           columnId: "col1",
-          createdBy: "Sarah Miller",
-          assignedTo: "David Lee",
+          createdBy: "user1",
+          assignedTo: "user2",
           priority: "high",
           dueDate: "2023-10-25",
           createdDate: "2023-10-15",
@@ -144,8 +136,8 @@ export const useStore = create<StoreState>()(
           description:
             "Set up a secure user authentication system using industry best practices.",
           columnId: "col1",
-          createdBy: "Emily Chen",
-          assignedTo: "Michael Brown",
+          createdBy: "user1",
+          assignedTo: "user2",
           priority: "medium",
           dueDate: "2023-11-02",
           createdDate: "2023-10-16",
@@ -156,8 +148,8 @@ export const useStore = create<StoreState>()(
           description:
             "Create comprehensive documentation for the backend API.",
           columnId: "col1",
-          createdBy: "David Lee",
-          assignedTo: "Jessica Wilson",
+          createdBy: "user1",
+          assignedTo: "user2",
           priority: "low",
           dueDate: "2023-11-15",
           createdDate: "2023-10-17",
@@ -167,8 +159,8 @@ export const useStore = create<StoreState>()(
           title: "Develop the core features",
           description: "Implement the main functionalities of the application.",
           columnId: "col2",
-          createdBy: "Michael Brown",
-          assignedTo: "Sarah Miller",
+          createdBy: "user1",
+          assignedTo: "user2",
           priority: "high",
           dueDate: "2023-10-30",
           createdDate: "2023-10-18",
@@ -179,8 +171,8 @@ export const useStore = create<StoreState>()(
           description:
             "Configure and optimize the database for the application.",
           columnId: "col2",
-          createdBy: "Jessica Wilson",
-          assignedTo: "Emily Chen",
+          createdBy: "user1",
+          assignedTo: "user2",
           priority: "medium",
           dueDate: "2023-11-05",
           createdDate: "2023-10-19",
@@ -190,8 +182,8 @@ export const useStore = create<StoreState>()(
           title: "Plan the project roadmap",
           description: "Define the project goals, milestones, and timelines.",
           columnId: "col3",
-          createdBy: "Sarah Miller",
-          assignedTo: "David Lee",
+          createdBy: "user1",
+          assignedTo: "user2",
           priority: "high",
           dueDate: "2023-10-10",
           createdDate: "2023-10-01",
@@ -201,15 +193,39 @@ export const useStore = create<StoreState>()(
           title: "Gather user requirements",
           description: "Collect and analyze user needs and expectations.",
           columnId: "col3",
-          createdBy: "Emily Chen",
-          assignedTo: "Michael Brown",
+          createdBy: "user2",
+          assignedTo: "user1",
           priority: "medium",
           dueDate: "2023-10-05",
           createdDate: "2023-09-25",
         },
       },
+      // Initial users
       users: initialUsers,
+      currentUserId: "user1",
 
+      // Create user
+      addUser: (name: string) => {
+        const id = generateId();
+        const newUser: User = {
+          id,
+          name,
+          avatar: generateAvatar(name),
+        };
+
+        set((state) => ({
+          users: { ...state.users, [id]: newUser },
+        }));
+
+        return id;
+      },
+
+      // Set current user
+      setCurrentUser: (userId: string) => {
+        set({ currentUserId: userId });
+      },
+
+      // Create board
       createBoard: (name: string, createdBy: string) => {
         const id = generateId();
         const newBoard: Board = {
@@ -227,10 +243,12 @@ export const useStore = create<StoreState>()(
         return id;
       },
 
+      // Delete board
       deleteBoard: (boardId: string) => {
         set((state) => {
           const { [boardId]: deletedBoard, ...remainingBoards } = state.boards;
 
+          // Delete columns and tasks
           const columnsToDelete = Object.keys(state.columns).filter(
             (colId) => state.columns[colId].boardId === boardId
           );
@@ -252,6 +270,7 @@ export const useStore = create<StoreState>()(
         });
       },
 
+      // Create column
       createColumn: (boardId: string, title: string) => {
         const id = generateId();
         const boardColumns = Object.values(get().columns).filter(
@@ -281,6 +300,7 @@ export const useStore = create<StoreState>()(
         return id;
       },
 
+      // Update column
       updateColumn: (columnId: string, title: string) => {
         set((state) => ({
           columns: {
@@ -290,6 +310,7 @@ export const useStore = create<StoreState>()(
         }));
       },
 
+      // Delete column
       deleteColumn: (columnId: string) => {
         set((state) => {
           const column = state.columns[columnId];
@@ -298,10 +319,9 @@ export const useStore = create<StoreState>()(
           const { [columnId]: deletedColumn, ...remainingColumns } =
             state.columns;
 
+          // Delete tasks
           const newTasks = { ...state.tasks };
-          column.taskIds.forEach(
-            (taskId: string | number) => delete newTasks[taskId]
-          );
+          column.taskIds.forEach((taskId) => delete newTasks[taskId]);
 
           return {
             columns: remainingColumns,
@@ -320,6 +340,7 @@ export const useStore = create<StoreState>()(
         });
       },
 
+      // Create task
       createTask: (columnId: string, task: Omit<Task, "id" | "columnId">) => {
         const id = generateId();
         const newTask: Task = {
@@ -343,6 +364,7 @@ export const useStore = create<StoreState>()(
         return id;
       },
 
+      // Update task
       updateTask: (taskId: string, updates: Partial<Task>) => {
         set((state) => ({
           tasks: {
@@ -352,6 +374,7 @@ export const useStore = create<StoreState>()(
         }));
       },
 
+      // Delete task
       deleteTask: (taskId: string) => {
         set((state) => {
           const task = state.tasks[taskId];
@@ -366,7 +389,7 @@ export const useStore = create<StoreState>()(
               [task.columnId]: {
                 ...state.columns[task.columnId],
                 taskIds: state.columns[task.columnId].taskIds.filter(
-                  (id: string) => id !== taskId
+                  (id) => id !== taskId
                 ),
               },
             },
@@ -374,6 +397,7 @@ export const useStore = create<StoreState>()(
         });
       },
 
+      // Move task
       moveTask: (
         taskId: string,
         targetColumnId: string,
@@ -388,9 +412,12 @@ export const useStore = create<StoreState>()(
 
           if (!sourceColumn || !targetColumn) return state;
 
+          // Remove from source column
           const newSourceTaskIds = sourceColumn.taskIds.filter(
-            (id: string) => id !== taskId
+            (id) => id !== taskId
           );
+
+          // Add to target column
           const newTargetTaskIds = [...targetColumn.taskIds];
           newTargetTaskIds.splice(targetIndex, 0, taskId);
 
@@ -408,6 +435,7 @@ export const useStore = create<StoreState>()(
         });
       },
 
+      // Reorder tasks
       reorderTasks: (columnId: string, taskIds: string[]) => {
         set((state) => ({
           columns: {
