@@ -30,7 +30,7 @@ export default function BoardsPage() {
       const boardId = createBoard(newBoardName.trim(), users[createdBy].name);
       setNewBoardName("");
       setIsModalOpen(false);
-      navigate(`/board/${boardId}`);
+      navigate(`/boards/${boardId}`);
     }
   };
 
