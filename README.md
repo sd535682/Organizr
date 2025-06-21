@@ -10,3 +10,5 @@ To run the application, follow these steps:
 4. Install dependencies by running `pnpm install`
 5. Run the development server by running `pnpm run dev`
 6. Open http://localhost:{port} in your browser
+
+Check the app at `https://organizr-emitrr.netlify.app`
