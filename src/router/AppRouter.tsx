@@ -1,14 +1,12 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router";
-import { BoardsPage } from "../pages/BoardsPage";
-import { BoardDetailsPage } from "../pages/BoardDetailsPage";
-import StickyHeader from "../components/Header/StickyHeader";
+import BoardsPage from "../pages/BoardsPage";
+import BoardDetailsPage from "../pages/BoardDetailsPage";
 
 export const AppRouter: React.FC = () => {
   return (
     <Router>
       {/* Sticky Header common for all pages */}
-      <StickyHeader />
       <Routes>
         {/* Default route redirects to boards */}
         <Route path="/" element={<Navigate to="/boards" replace />} />
