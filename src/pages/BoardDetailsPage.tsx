@@ -17,6 +17,7 @@ import Column from "../components/Column/Column";
 import TaskCard from "../components/TaskCard/TaskCard";
 import Button from "../components/UIcomponents/Button";
 import Modal from "../components/UIcomponents/Modal";
+import { Plus } from "lucide-react";
 
 export default function BoardDetailsPage() {
   const { boardId } = useParams<{ boardId: string }>();
@@ -127,13 +128,18 @@ export default function BoardDetailsPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="flex items-center justify-between mb-8">
           <div className="flex items-center space-x-4">
-            <h1 className="text-2xl font-bold text-gray-900">{board.name}</h1>
+            <h1 className="text-2xl font-semibold text-gray-900">
+              {board.name}
+            </h1>
           </div>
           <div className="flex items-center space-x-4">
-            <Button variant="secondary">🔍 Filter</Button>
-            <Button variant="secondary">↕️ Sort</Button>
-            <Button onClick={() => setIsColumnModalOpen(true)}>
-              + Add Column
+            <Button
+              onClick={() => setIsColumnModalOpen(true)}
+              className="cursor-pointer"
+            >
+              <Plus className="w-4 h-4 text-white stroke-3 mt-[2px]" />
+              <span className="text-white mx-2 mb-[2px]">|</span>
+              <span className="text-white">Add Column</span>
             </Button>
           </div>
         </div>
@@ -182,11 +188,14 @@ export default function BoardDetailsPage() {
           <div className="flex justify-end space-x-3">
             <Button
               variant="secondary"
+              className="cursor-pointer"
               onClick={() => setIsColumnModalOpen(false)}
             >
               Cancel
             </Button>
-            <Button onClick={handleCreateColumn}>Add Column</Button>
+            <Button onClick={handleCreateColumn} className="cursor-pointer">
+              Add Column
+            </Button>
           </div>
         </div>
       </Modal>
