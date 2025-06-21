@@ -6,6 +6,7 @@ import Button from "../components/UIcomponents/Button";
 import Modal from "../components/UIcomponents/Modal";
 import Input from "../components/UIcomponents/Input";
 import Select from "../components/UIcomponents/Select";
+import { Plus } from "lucide-react";
 
 export default function BoardsPage() {
   const navigate = useNavigate();
@@ -50,30 +51,35 @@ export default function BoardsPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Page Title and Create Button */}
         <div className="flex items-center justify-between mb-8">
-          <h2 className="text-3xl font-bold text-gray-900">Task Boards</h2>
-          <Button onClick={() => setIsModalOpen(true)}>
-            + Create New Board
+          <h2 className="text-3xl font-bold text-gray-900">Boards</h2>
+          <Button
+            onClick={() => setIsModalOpen(true)}
+            className="cursor-pointer"
+          >
+            <Plus className="w-4 h-4 text-white stroke-3 mt-[2px]" />
+            <span className="text-white mx-2 mb-[2px]">|</span>
+            <span className="text-white">Create New Board</span>
           </Button>
         </div>
 
         {/* Boards Table */}
         <div className="bg-white rounded-lg shadow overflow-hidden">
           <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50">
+            <thead className="bg-gray-100">
               <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
                   Board Name
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
                   Created By
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
                   Created Date
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
                   Columns
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
                   Actions
                 </th>
               </tr>
@@ -109,13 +115,13 @@ export default function BoardsPage() {
                     <div className="flex items-center space-x-3">
                       <button
                         onClick={() => navigate(`/boards/${board.id}`)}
-                        className="text-blue-600 hover:text-blue-900 transition-colors"
+                        className="text-blue-600 hover:text-blue-900 transition-colors cursor-pointer"
                       >
                         View
                       </button>
                       <button
                         onClick={() => handleDeleteBoard(board.id, board.name)}
-                        className="text-red-600 hover:text-red-900 transition-colors"
+                        className="text-red-600 hover:text-red-900 transition-colors cursor-pointer"
                       >
                         Delete
                       </button>
