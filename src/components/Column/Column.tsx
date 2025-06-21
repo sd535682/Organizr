@@ -68,7 +68,7 @@ export default function Column({ column, tasks }: ColumnProps) {
   };
 
   return (
-    <div className="bg-gray-50 rounded-lg p-4 w-80 flex-shrink-0 max-h-[70vh] overflow-y-auto">
+    <div className="bg-gray-100 rounded-lg p-4 w-80 flex-shrink-0 max-h-[70vh] overflow-y-auto">
       <div className="flex items-center justify-between mb-4">
         {isEditingTitle ? (
           <div className="flex items-center space-x-2 flex-1">
@@ -130,7 +130,7 @@ export default function Column({ column, tasks }: ColumnProps) {
 
       <Button
         variant="secondary"
-        className="w-full mt-4 text-blue-600 border-blue-200 hover:bg-blue-50 cursor-pointer"
+        className="w-full mt-4 text-blue-600 border-2 shadow-md border-b-gray-200 hover:bg-blue-50 cursor-pointer"
         onClick={() => setIsTaskModalOpen(true)}
       >
         + Add Card
