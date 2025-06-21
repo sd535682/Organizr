@@ -7,13 +7,13 @@ interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
   options: { value: string; label: string }[];
 }
 
-export const Select: React.FC<SelectProps> = ({
+export default function Select({
   label,
   error,
   options,
   className,
   ...props
-}) => {
+}: SelectProps) {
   return (
     <div className="space-y-1">
       {label && (
@@ -38,4 +38,4 @@ export const Select: React.FC<SelectProps> = ({
       {error && <p className="text-sm text-red-600">{error}</p>}
     </div>
   );
-};
+}
