@@ -130,7 +130,7 @@ export default function Column({ column, tasks }: ColumnProps) {
 
       <Button
         variant="secondary"
-        className="w-full mt-4 text-blue-600 border-blue-200 hover:bg-blue-50"
+        className="w-full mt-4 text-blue-600 border-blue-200 hover:bg-blue-50 cursor-pointer"
         onClick={() => setIsTaskModalOpen(true)}
       >
         + Add Card

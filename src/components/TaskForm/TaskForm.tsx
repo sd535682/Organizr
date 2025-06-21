@@ -121,10 +121,17 @@ export const TaskForm: React.FC<TaskFormProps> = ({
       </div>
 
       <div className="flex justify-end space-x-3 pt-4">
-        <Button type="button" variant="secondary" onClick={onClose}>
+        <Button
+          type="button"
+          variant="secondary"
+          onClick={onClose}
+          className="cursor-pointer"
+        >
           Cancel
         </Button>
-        <Button type="submit">{task ? "Update Task" : "Create Task"}</Button>
+        <Button type="submit" className="cursor-pointer">
+          {task ? "Update Task" : "Create Task"}
+        </Button>
       </div>
     </form>
   );

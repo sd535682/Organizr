@@ -155,7 +155,10 @@ export default function BoardsPage() {
               <p className="text-gray-500 mb-4">
                 Get started by creating your first task board.
               </p>
-              <Button onClick={() => setIsModalOpen(true)}>
+              <Button
+                onClick={() => setIsModalOpen(true)}
+                className="cursor-pointer"
+              >
                 Create Your First Board
               </Button>
             </div>
@@ -190,10 +193,13 @@ export default function BoardsPage() {
               type="button"
               variant="secondary"
               onClick={() => setIsModalOpen(false)}
+              className="cursor-pointer"
             >
               Cancel
             </Button>
-            <Button onClick={handleCreateBoard}>Create Board</Button>
+            <Button onClick={handleCreateBoard} className="cursor-pointer">
+              Create Board
+            </Button>
           </div>
         </div>
       </Modal>
