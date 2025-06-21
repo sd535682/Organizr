@@ -125,7 +125,7 @@ export default function BoardDetailsPage() {
     <div className="min-h-screen bg-gray-50">
       <Header />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="mx-auto px-4 sm:px-6 lg:px-8 pt-8">
         <div className="flex items-center justify-between mb-8">
           <div className="flex items-center space-x-4">
             <h1 className="text-2xl font-semibold text-gray-900">
